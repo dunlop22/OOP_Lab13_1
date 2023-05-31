@@ -10,6 +10,7 @@
 using namespace std;
 
 class StateCont;
+class MementoCont;
 
 class Container
 {
@@ -30,7 +31,8 @@ private:
 	StateCont* sendedState;
 	StateCont* notSendedState;
 
-	vector <MementoCont> Mem_con1;
+	MementoCont* emptySave;
+	MementoCont* fullSave;
 
 public:
 	double cost = 0;
@@ -62,8 +64,10 @@ public:
 
 	void putParcel(Parcel* parcel);
 	double get_procent_occupancy();		//проверка заполненности контейнера
-	void save_memento();
-	void restore_memento();
+	void save_empty();
+	void save_full();
+	void restore_empty();
+	void restore_full();
 	//void get_cost_cont();
 };
 

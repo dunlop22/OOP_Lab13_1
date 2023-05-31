@@ -410,7 +410,11 @@ ESC) Выход\n\nОбщее количество посылок на данный момент: " << parcel_spisok.size
 
             //создание большого контейнера с состояниями
             Container* myCont = new Big_Cont(state2, state1);       //объем - 300
+            myCont->generate_id();
 
+            myCont->print_information_c(0);
+            myCont->save_empty();
+            
             //создание посылок, которые будут помещены в контейнер
             vector<Parcel*> Parc;
             Parcel* parc_temp = new Parcel("Барнаул", "Пермь", 2, 4, 6, 56, 0);   //1 посылка, успешно помещена (48 единиц)
@@ -442,6 +446,29 @@ ESC) Выход\n\nОбщее количество посылок на данный момент: " << parcel_spisok.size
             {
                 Parc[i]->get_status(); // состояние после отправки контейнера
             }
+
+            myCont->print_information_c(0);
+            myCont->save_full();
+            
+
+            myCont->restore_empty();
+            myCont->print_information_c(0);
+            cout << "\n\n";
+            Parcel* parc_temp5 = new Parcel("Уфа", "Пермь", 4, 3, 2, 16, 0);   //5 посылка, не помещена, т.к. контейнер уже отправлен
+            Parcel* parc_temp6 = new Parcel("Уфа", "Пермь", 4, 3, 2, 16, 0);   //5 посылка, не помещена, т.к. контейнер уже отправлен
+            myCont->putParcel(parc_temp5);
+            myCont->putParcel(parc_temp6);
+
+            myCont->print_information_c(0);
+
+            cout << "\n\n";
+            myCont->restore_empty();
+            myCont->print_information_c(0);
+            cout << "\n\n";
+            myCont->restore_full();
+            myCont->print_information_c(0);
+
+
 
             //удаление созданных объектов
             delete myCont;

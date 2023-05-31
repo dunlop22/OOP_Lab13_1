@@ -5,5 +5,6 @@ class SendedStateCont :
 {
 public:
     void putParcel(Parcel* parcel);
+    string getStatus();
 };
 

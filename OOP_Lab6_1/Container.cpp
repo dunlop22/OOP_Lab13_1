@@ -101,12 +101,26 @@ string Container::get_town()
 
 void Container::print_information_c(int tip)
 {
-	cout << "ID: " << this->id << "\n";
+	cout << "Контейнер (ID: " << this->id << ")\n";
+
+	if (myState != nullptr)
+	{
+		cout << "Статус: " << myState->getStatus() << "\n";
+	}
+
+	cout << "Список посылок: \n";
+
+	if (parce.size() == 0)
+	{
+		cout << "Посылки отсутсвуют.\n";
+	}
+
 	for (int i = 0;i < parce.size();i++)
 	{
 		cout << "     --";
 		this->parce[i]->print_information();
 	}
+
 	if (tip == 1)
 	{
 		cout << "Свободное место в контейнере: " << this->free_obem << "м^3\n\n";
@@ -150,11 +164,67 @@ double Container::get_procent_occupancy()
 	return ((space - free_obem) / space * 100);
 }
 
-void Container::save_memento()
+void Container::save_empty()
 {
+	if (emptySave != nullptr)
+	{
+		delete emptySave;
+	}
 
-	MementoCont* mem_temp = new MementoCont(myState, parce);
-	Mem_con.push_back(*mem_temp);
+	emptySave = new MementoCont(myState, parce);
+	cout << "\nСохранение состояния контейнера...\n\n\n";
+}
+
+void Container::save_full()
+{
+	if (fullSave != nullptr)
+	{
+		delete fullSave;
+
+	}
+
+	fullSave = new MementoCont(myState, parce);
+	cout << "\nСохранение состояния контейнера...\n\n\n";
+}
+
+void Container::restore_empty()
+{
+	cout << "\nВосстановление состояния контейнера...\n\n\n";
+
+	myState = notSendedState;
+
+	parce.clear();
+	free_obem = space;
+
+	vector<Parcel*> temp = emptySave->getParcels();
+
+	for (int i = 0; i < temp.size(); i++)
+	{
+		this->putParcel(temp[i]->clone());
+	}
+
+	myState = emptySave->getState();
+
+	
+}
+
+void Container::restore_full()
+{
+	cout << "\nВосстановление состояния контейнера...\n\n\n";
+
+	myState = notSendedState;
+
+	parce.clear();
+	free_obem = space;
+
+	vector<Parcel*> temp = fullSave->getParcels();
+
+	for (int i = 0; i < temp.size(); i++)
+	{
+		this->putParcel(temp[i]->clone());
+	}
+
+	myState = fullSave->getState();
 }
 
 /*

@@ -10,6 +10,7 @@ protected:
 
 public:
 	void setContainer(Container* container);
-	virtual void putParcel(Parcel* parcel);
+	virtual void putParcel(Parcel* parcel) = 0;
+	virtual string getStatus() = 0;
 };
 

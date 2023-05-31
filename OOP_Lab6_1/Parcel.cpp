@@ -184,6 +184,7 @@ int Parcel::get_status()
 Parcel* Parcel::clone()
 {
 	Parcel* parc_clone = new Parcel(*this);
+	parc_clone->generate_id();
 
 	//cout << "Клонирование письма...\n" << this << " --clone--> " << lett_clone << endl;
 
